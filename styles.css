@@ -1,5 +1,7 @@
+
 body {
-    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    body {
+    font-family: 'Inter', sans-serif;
     background-color: #f0fdf4;
     color: #333333;
     line-height: 1.6;
@@ -14,7 +16,7 @@ h1, h2, h3 {
 
 header {
     text-align: center;
-    background-color: #dcfce7;
+    background: linear-gradient(135deg, #dcfce7 0%, #f0fdf4 100%);
     padding: 30px;
     border-radius: 12px;
     border-bottom: 4px solid #166534;
