@@ -4,11 +4,9 @@
     background-color: #f0fdf4;
     color: #333333;
     line-height: 1.6;
-    margin: 0 auto;
-    max-width: 1200px;
-    padding: 20px;
+    margin: 0; 
+    padding: 30px; 
 }
-
 h1, h2, h3 {
     color: #166534;
 }
