@@ -207,3 +207,55 @@ document.addEventListener("DOMContentLoaded", function() {
         ladujNotatki();
     }
 });
+// --- ZADANIE 8: Komunikacja z serwerem (POST do JSONPlaceholder) ---
+// Numer albumu: 75560
+
+document.addEventListener("DOMContentLoaded", function() {
+    const formularz = document.getElementById("formularzKontaktowy");
+    
+    if (formularz) {
+        formularz.addEventListener("submit", function(event) {
+            event.preventDefault(); // Strona się nie przeładuje po kliknięciu Wyślij
+
+            // 1. Pobieranie danych z formularza
+            const imie = document.getElementById("imie").value;
+            const email = document.getElementById("email").value;
+            const wiadomosc = document.getElementById("wiadomosc").value;
+
+            // 2. Tworzenie paczki danych (JSON)
+            const daneDoWyslania = {
+                name: imie,
+                email: email,
+                message: wiadomosc,
+                timestamp: new Date().toISOString()
+            };
+
+            // 3. Publiczne API zalecone przez wykładowcę (JSONPlaceholder - w 100% darmowe)
+            const backendURL = "https://jsonplaceholder.typicode.com/posts";
+
+            // 4. Wysłanie danych (metoda POST)
+            fetch(backendURL, {
+                method: "POST",
+                headers: {
+                    "Content-Type": "application/json"
+                },
+                body: JSON.stringify(daneDoWyslania)
+            })
+            .then(response => response.json())
+            .then(data => {
+                // Wypisanie w konsoli, aby pokazać prowadzącemu na wideo
+                console.log("=== ZADANIE 8: SUKCES ===");
+                console.log("Serwer JSONPlaceholder otrzymał dane:", data);
+                
+                // Alert dla użytkownika
+                alert("Sukces! Formularz został wysłany. Serwer nadał ID zgłoszenia: " + data.id);
+                
+                formularz.reset(); // Czyszczenie formularza po wysłaniu
+            })
+            .catch(error => {
+                console.error("Błąd podczas wysyłania:", error);
+                alert("Wystąpił błąd podczas wysyłania danych.");
+            });
+        });
+    }
+});
