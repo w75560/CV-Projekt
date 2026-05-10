@@ -147,3 +147,63 @@ document.addEventListener("DOMContentLoaded", function() {
             console.error("Wystąpił problem z pobieraniem danych:", error);
         });
 });
+// --- ZAD7: Local Storage 
+// Numer albumu: 75560
+
+document.addEventListener("DOMContentLoaded", function() {
+    const inputNotatki = document.getElementById("nowa-notatka");
+    const btnDodaj = document.getElementById("dodaj-notatke");
+    const listaNotatek = document.getElementById("lista-notatek");
+
+    if (inputNotatki && btnDodaj && listaNotatek) {
+        
+        // 1. Ładowanie danych z localStorage po odświeżeniu
+        function ladujNotatki() {
+            listaNotatek.innerHTML = ""; 
+            let zapisaneNotatki = JSON.parse(localStorage.getItem("mojeNotatki")) || [];
+            
+            zapisaneNotatki.forEach((notatka, index) => {
+                let li = document.createElement("li");
+                li.textContent = notatka + " ";
+                li.style.marginBottom = "5px";
+                
+                // Przycisk usuwania
+                let btnUsun = document.createElement("button");
+                btnUsun.textContent = "Usuń";
+                btnUsun.style.marginLeft = "10px";
+                btnUsun.style.cursor = "pointer";
+                btnUsun.onclick = function() {
+                    usunNotatke(index);
+                };
+                
+                li.appendChild(btnUsun);
+                listaNotatek.appendChild(li);
+            });
+        }
+
+        // 2. Dodawanie nowego elementu do Local Storage
+        btnDodaj.addEventListener("click", function() {
+            let tekst = inputNotatki.value.trim();
+            if (tekst !== "") {
+                let zapisaneNotatki = JSON.parse(localStorage.getItem("mojeNotatki")) || [];
+                zapisaneNotatki.push(tekst); 
+                localStorage.setItem("mojeNotatki", JSON.stringify(zapisaneNotatki)); 
+                inputNotatki.value = ""; 
+                ladujNotatki(); 
+            } else {
+                alert("Wpisz tekst notatki!");
+            }
+        });
+
+        // 3. Funkcja usuwająca element
+        function usunNotatke(index) {
+            let zapisaneNotatki = JSON.parse(localStorage.getItem("mojeNotatki")) || [];
+            zapisaneNotatki.splice(index, 1); 
+            localStorage.setItem("mojeNotatki", JSON.stringify(zapisaneNotatki)); 
+            ladujNotatki(); 
+        }
+
+        // Start
+        ladujNotatki();
+    }
+});
